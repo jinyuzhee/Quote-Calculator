@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!-- YJ -->
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Quote Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #a4ccd3;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .container {
+      display: flex;
+      padding: 0;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+    }
+
+    #calculator {
+      box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.15);
+      border-radius: 0.3rem;
+      background: #fff;
+      width: 30vw;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .text-center {
+      text-align: center;
+      margin: 0 auto 3rem;
+    }
+
+
+    .form-control {
+      padding: 0.5rem 0.8rem;
+      font-weight: 400;
+      color: #212529;
+      background-color: #fff;
+      border: 1px solid #ced4da;
+
+    }
+
+    .form-control:focus {
+      background-color: #fff;
+      border-color: #86b7fe;
+      outline: 0;
+    }
+
+    input,
+    select {
+      display: block;
+      box-shadow: 0;
+      margin-bottom: 1.5rem;
+      width: 80%;
+      box-sizing: content-box;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+
+    #currency {
+      width: 100%;
+    }
+
+    .generateBtn {
+      background: #27AE60;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      padding: 0.8rem 0.8rem;
+      margin: 10px auto;
+    }
+
+    .generateBtn:hover {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+    }
+
+    .resetBtn {
+      background: #cc1e31;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      padding: 0.8rem 0.8rem;
+      margin: 10px auto;
+    }
+
+    .resetBtn:hover {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #cc1e31;
+    }
+
+    #results {
+      margin: 0 auto;
+    }
+
+    #quote {
+      color: green;
+    }
+
+    .input-validation-error {
+      border: 1px solid red;
+      position: relative;
+    }
+
+    .form-error-msg-amount {
+      display: none;
+    }
+
+    .form-error-msg-amount.active {
+      font-size: 0.8rem;
+      color: red;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .form-error-msg-hour {
+      display: none;
+    }
+
+    .form-error-msg-hour.active {
+      font-size: 0.8rem;
+      color: red;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    @media (400px <=width <=700px) {
+      #calculator {
+        width: 50vw;
+      }
+    }
+
+    @media (width < 400px) {
+      #calculator {
+        width: 80vw;
+      }
+    }
+
+    @media screen and (max-width: 900px) and (min-width: 480px) {
+      #calculator {
+        width: 80vw;
+      }
+    }
+
+    @media only screen and (max-device-width: 820px) {
+      #calculator {
+        width: 80vw;
+        min-height: 400px;
+        margin-top: 200px;
+        padding: 60px;
+        border-radius: 0.8rem;
+      }
+
+      input,
+      select {
+        margin-bottom: 3rem;
+        height: 48px;
+        font-size: 28px;
+      }
+
+
+      label {
+        margin-bottom: 1rem;
+        font-size: 200%;
+      }
+
+      .text-center {
+        font-size: 300%;
+        margin: 0 auto 4rem;
+      }
+
+      .generateBtn {
+        font-size: 200%;
+        height: 80px;
+        margin: 20px auto;
+        padding: 1.2rem 1.2rem;
+        border-radius: 0.6rem;
+        padding: 1.2rem 1.2rem;
+      }
+
+      .resetBtn {
+        font-size: 200%;
+        height: 80px;
+        border-radius: 0.6rem;
+        padding: 1.2rem 1.2rem;
+        margin: 20px auto 20px 20px;
+      }
+
+      #quote {
+        font-size: 200%;
+      }
+
+      .form-error-msg-amount.active {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-error-msg-hour.active {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer {
+        font-size: 3rem;
+      }
+    }
+
+    .footer {
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- YJ -->
+  <div class="container" style="height: 100vh">
+
+    <form class="shadow" id="calculator">
+      <h1 class="text-center">Quote Calculator</h1>
+      <div class="form-group">
+        <label for="amount">The hourly rate (€)</label>
+        <input class="form-control" type="number" name="amount" id="amount">
+        <span class="form-error-msg-amount">This field is required</span>
+      </div>
+      <div class="form-group">
+        <label for="hour">The total number of hours</label>
+        <input class="form-control" type="number" name="hour" id="hour">
+        <span class="form-error-msg-hour">This field is required</span>
+      </div>
+      <div class="form-group">
+        <label for="currencies">The currency</label>
+        <select name="currencies" id="currencies" class="form-control">
+          <option value="1" selected="selected">Euro</option>
+          <option value="0.97">United States dollar</option>
+          <option value="143.98">Japanese yen</option>
+        </select>
+      </div>
+      <button type="submit" class="generateBtn">Generate Quote</button>
+      <button type="button" id="reset" class="resetBtn">Reset</button>
+      <div id="results" class="text-center" style="display: none">
+        <h2>
+          Your quote is:
+        </h2>
+        <h1 id="quote">
+        </h1>
+      </div>
+    </form>
+
+    <div class="footer">
+      <p>Made by Yuzhe Jin</p>
+    </div>
+  </div>
+</body>
+<script>
+  //YJ
+  //calculate the cost
+  function calculateCost(currency) {
+    const theHourlyRate = document.getElementById("amount").value;
+
+    const theHoursNumber = document.getElementById("hour").value;
+
+    const cost = theHoursNumber * theHourlyRate * currency;
+
+    return cost;
+  }
+
+
+  const calculator = document.getElementById("calculator");
+
+  //validation before submit
+  calculator.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!document.getElementById("amount").value) {
+
+      document.getElementById("amount").classList.add("input-validation-error");
+
+      document.querySelector(".form-error-msg-amount").classList.add("active");
+
+      document.querySelector("#amount").style.margin = "0 0 0.8rem";
+
+      return false;
+
+
+    } else if (!document.getElementById("hour").value) {
+      document.getElementById("hour").classList.add("input-validation-error");
+
+      document.querySelector(".form-error-msg-hour").classList.add("active");
+      document.getElementById("amount").classList.remove("input-validation-error");
+
+      document.querySelector(".form-error-msg-amount").classList.remove("active");
+
+      document.querySelector("#hour").style.margin = "0 0 0.8rem";
+      document.querySelector("#amount").style.margin = "0 0 2rem";
+
+      return false;
+
+    } else {
+      document.getElementById("amount").classList.remove("input-validation-error");
+
+      document.querySelector(".form-error-msg-amount").classList.remove("active");
+      document.getElementById("hour").classList.remove("input-validation-error");
+
+      document.querySelector(".form-error-msg-hour").classList.remove("active");
+
+      document.querySelector("#amount").style.margin = "0 0 2rem";
+      document.querySelector("#hour").style.margin = "0 0 2rem";
+    }
+
+
+    // Display results block
+    document.getElementById("results").style.display = "block";
+
+
+    // Set quoted cost
+    var select = document.getElementById("currencies");
+    var value = select.options[select.selectedIndex].value;
+    var currency = select.options[select.selectedIndex].innerText;
+
+    if (currency == "Euro") {
+
+      document.getElementById("quote").innerHTML = calculateCost(value).toLocaleString("en-IE", {
+        style: "currency",
+        currency: "EUR"
+      });
+    }
+
+    if (currency == "United States dollar") {
+      document.getElementById("quote").innerHTML = calculateCost(value).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      });
+    }
+
+    if (currency == "Japanese yen") {
+      document.getElementById("quote").innerHTML = calculateCost(value).toLocaleString("ja-JP", {
+        style: "currency",
+        currency: "JPY"
+      });
+    }
+  })
+
+  //reset
+  function resetCalculator() {
+    document.getElementById("results").style.display = "none";
+    document.getElementById("amount").value = '';
+    document.getElementById("amount").classList.remove("input-validation-error");
+    document.querySelector(".form-error-msg-amount").classList.remove("active");
+
+    document.getElementById("hour").value = '';
+    document.getElementById("hour").classList.remove("input-validation-error");
+    document.querySelector(".form-error-msg-hour").classList.remove("active");
+
+    document.getElementById("currencies").selectedIndex = 0;
+  }
+
+  document.getElementById("reset").addEventListener("click", resetCalculator);
+</script>
+
+</html>
